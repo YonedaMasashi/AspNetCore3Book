@@ -1,45 +1,28 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Logging;
-using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
+using SampleRazorApp.Models;
 
 namespace SampleRazorApp.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
+        private readonly SampleRazorAppContext _context;
 
-        public IndexModel(ILogger<IndexModel> logger)
+        public IndexModel(SampleRazorAppContext context)
         {
-            _logger = logger;
+            _context = context;
         }
 
-        public string Message { get; set;} = "no message.";
+        public IList<Person> Person { get;set; }
 
-        [DataType(DataType.Text)]
-        public string Name { get; set; }
-
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
-
-        [DataType(DataType.EmailAddress)]
-        public string Mail { get; set; }
-
-        [DataType(DataType.PhoneNumber)]
-        public string Tel { get; set; }
-
-        public void OnGet()
+        public async Task OnGetAsync()
         {
-            Message = "入力して下さい。";
+            Person = await _context.Person.ToListAsync();
         }
-
-        public void OnPost(string name, string password, string mail, string tel) {
-            Message = "[Name:" + name + ", password:(" + password.Length + " chars, mail:" + " <" + tel + ">]";
-        }
-
     }
 }
