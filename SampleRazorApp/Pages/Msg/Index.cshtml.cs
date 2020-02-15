@@ -7,23 +7,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using SampleRazorApp.Models;
 
-namespace SampleRazorApp.Pages
+namespace SampleRazorApp.Pages_Msg
 {
     public class IndexModel : PageModel
     {
-        private readonly SampleRazorAppContext _context;
+        public readonly SampleRazorAppContext _context;
 
         public IndexModel(SampleRazorAppContext context)
         {
             _context = context;
         }
 
-        public IList<Person> Person { get;set; }
+        public IList<Message> Message { get;set; }
 
         public async Task OnGetAsync()
         {
-            //Person = await _context.Person.ToListAsync();
-            Person = await _context.Person.Include("Messages").ToListAsync();
+            Message = await _context.Message
+                .Include(m => m.Person).ToListAsync();
         }
     }
 }

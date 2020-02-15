@@ -148,5 +148,18 @@ namespace SampleMVCApp.Controllers
         {
             return _context.Person.Any(e => e.PersonId == id);
         }
+
+        public async Task<IActionResult> Find() {
+            IQueryable<Person> result = from p in _context.Person select p;
+            return View(await result.ToListAsync());
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Find(string find) {
+            IQueryable<Person> result = from p in _context.Person where
+                p.Name == find select p;
+            return View(await result.ToListAsync());
+        }
     }
 }

@@ -27,7 +27,7 @@ namespace SampleRazorApp
             services.AddRazorPages();
 
             services.AddDbContext<SampleRazorAppContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("SampleRazorAppContext")));
+                    options.UseSqlite(Configuration.GetConnectionString("SampleRazorAppContext")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

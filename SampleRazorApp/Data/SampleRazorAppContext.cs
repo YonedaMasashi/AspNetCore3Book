@@ -12,5 +12,11 @@ using SampleRazorApp.Models;
         {
         }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder) {
+            modelBuilder.Entity<Message>().Property<string>("Posted");
+        }
+
         public DbSet<SampleRazorApp.Models.Person> Person { get; set; }
+
+        public DbSet<SampleRazorApp.Models.Message> Message { get; set; }
     }
